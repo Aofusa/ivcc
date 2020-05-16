@@ -1,6 +1,9 @@
+CC=cc
 CFLAGS=-std=c11 -g -static
+OBJECTS:=$(patsubst %.c,%.o,$(wildcard *.c))
 
-ivcc: ivcc.c
+ivcc: $(OBJECTS)
+		$(CC) -o ivcc $(CFLAGS) $(OBJECTS)
 
 test: ivcc
 		./test.sh
