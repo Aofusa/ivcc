@@ -1,12 +1,6 @@
 #include <stdio.h>
 #include "ivcc.h"
 
-// 現在着目しているトークン
-extern Token *token;
-
-// 入力プログラム
-extern char *user_input;
-
 int main(int argc, char **argv)
 {
     if (argc != 2)

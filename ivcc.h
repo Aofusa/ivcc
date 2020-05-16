@@ -23,6 +23,12 @@ struct Token
     int len;        // トークンの長さ
 };
 
+// 現在着目しているトークン
+extern Token *token;
+
+// 入力プログラム
+extern char *user_input;
+
 // エラーを報告するための関数
 // printfと同じ引数をとる
 void error_at(char *loc, char *fmt, ...);
