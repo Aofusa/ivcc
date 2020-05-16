@@ -183,13 +183,13 @@ Node *new_node_num(int val) {
 Node *expr();       // expr     = equality
 Node *equality();   // equality = relational ("==" relational | "!=" relational)*
 Node *relational(); // relational = add ("<" add | "<=" add | ">" add | ">=" add)*
-Node *add();         // add      = mul ("+" mul | "-" mul)*
+Node *add();        // add      = mul ("+" mul | "-" mul)*
 Node *mul();        // mul      = unary ("*" unary | "/" unary)*
 Node *unary();      // unary    = ("+" | "-")? primary
 Node *primary();    // primary  = num | "(" expr ")"
 
 Node *expr() {
-    return relational();
+    return equality();
 }
 
 Node *equality() {
