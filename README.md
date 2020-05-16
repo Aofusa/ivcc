@@ -23,7 +23,7 @@ docker build -t local.dev/compilerbook . \
 CONTAINER=$(docker run --rm -d -it --name compilerbook local.dev/compilerbook /bin/bash) \
 && docker cp . ${CONTAINER}:/root/ \
 && docker exec -t ${CONTAINER} make test \
-&& docker stop ${CONTAINER}
+; docker stop ${CONTAINER}
 ```
 
 
