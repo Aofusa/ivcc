@@ -18,12 +18,12 @@ https://www.sigbus.info/compilerbook
 # コンテナのビルドと中に入って作業
 docker build -t local.dev/compilerbook . \
 && CONTAINER=$(docker run --rm -d -it --name compilerbook local.dev/compilerbook /bin/bash) \
-&& docker cp . ${CONTAINER}:/root \
+&& docker cp . ${CONTAINER}:/app \
 && docker attach ${CONTAINER}
 
 # make test の実行
 CONTAINER=$(docker run --rm -d -it --name compilerbook local.dev/compilerbook /bin/bash) \
-&& docker cp . ${CONTAINER}:/root/ \
+&& docker cp . ${CONTAINER}:/app \
 && docker exec -t ${CONTAINER} make test \
 ; docker stop ${CONTAINER}
 ```

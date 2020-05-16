@@ -3,5 +3,5 @@ RUN apt update && apt -y install --no-install-recommends \
     gcc make git binutils libc6-dev \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
-WORKDIR /root
+WORKDIR /app
 CMD ["/bin/bash"]
