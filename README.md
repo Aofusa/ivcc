@@ -1,6 +1,8 @@
 Low Layer
 =====
 
+[![CircleCI](https://circleci.com/gh/Aofusa/ivcc.svg?style=svg)](https://circleci.com/gh/Aofusa/ivcc)
+
 
 低レイヤーを歩く  
 
