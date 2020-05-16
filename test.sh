@@ -33,5 +33,23 @@ assert 50 "-1*100+150"
 assert 5 "10+(-4-1)"
 assert 5 "10/(-2)*-1"
 
+assert 1 "1 == 1"
+assert 0 "1 == 2"
+assert 0 "1 != 1"
+assert 1 "1 != 2"
+assert 0 "1 > 2"
+assert 0 "1 > 1"
+assert 1 "2 > 1"
+assert 0 "1 >= 2"
+assert 1 "1 >= 1"
+assert 1 "2 >= 1"
+assert 1 "1 < 2"
+assert 0 "1 < 1"
+assert 0 "2 < 1"
+assert 1 "1 <= 2"
+assert 1 "1 <= 1"
+assert 0 "2 <= 1"
+assert 1 "10 + ( -4 - 1 ) == 10 / ( - 2 ) * -1"
+
 echo OK
 

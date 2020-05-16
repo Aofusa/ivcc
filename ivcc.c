@@ -120,7 +120,8 @@ Token *tokenize(char *p) {
         // 1文字の記号をトークナイズ
         if (*p == '+' || *p == '-' ||
             *p == '*' || *p == '/' ||
-            *p == '(' || *p == ')') {
+            *p == '(' || *p == ')' ||
+            *p == '<' || *p == '>') {
             cur = new_token(TK_RESERVED, cur, p++, 1);
             continue;
         }
@@ -213,11 +214,11 @@ Node *relational() {
         if (consume("<=")) {
             node = new_node(ND_LE, node, add());
         } else if (consume(">=")) {
-            node = new_node(ND_GE, node, add());
+            node = new_node(ND_GE, add(), node);
         } else if (consume("<")) {
             node = new_node(ND_LT, node, add());
         } else if (consume(">")) {
-            node = new_node(ND_GT, node, add());
+            node = new_node(ND_GT, add(), node);
         } else {
             return node;
         }
@@ -300,6 +301,36 @@ void gen(Node *node) {
     case ND_DIV:
         printf("        cqo\n");
         printf("        idiv rdi\n");
+        break;
+    case ND_LT:
+        printf("        cmp rax, rdi\n");
+        printf("        setl al\n");
+        printf("        movzb rax, al\n");
+        break;
+    case ND_LE:
+        printf("        cmp rax, rdi\n");
+        printf("        setle al\n");
+        printf("        movzb rax, al\n");
+        break;
+    case ND_GT:
+        printf("        cmp rax, rdi\n");
+        printf("        setl al\n");
+        printf("        movzb rax, al\n");
+        break;
+    case ND_GE:
+        printf("        cmp rax, rdi\n");
+        printf("        setle al\n");
+        printf("        movzb rax, al\n");
+        break;
+    case ND_EQ:
+        printf("        cmp rax, rdi\n");
+        printf("        sete al\n");
+        printf("        movzb rax, al\n");
+        break;
+    case ND_NE:
+        printf("        cmp rax, rdi\n");
+        printf("        setne al\n");
+        printf("        movzb rax, al\n");
         break;
     }
 
