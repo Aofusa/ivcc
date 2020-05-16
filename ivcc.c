@@ -147,6 +147,12 @@ typedef enum {
     ND_MUL, // *
     ND_DIV, // /
     ND_NUM, // 整数
+    ND_LT, // <
+    ND_LE, // <=
+    ND_GT, // >
+    ND_GE, // >=
+    ND_EQ, // ==
+    ND_NE, // !=
 } NodeKind;
 
 typedef struct Node Node;
@@ -177,12 +183,48 @@ Node *new_node_num(int val) {
 Node *expr();       // expr     = equality
 Node *equality();   // equality = relational ("==" relational | "!=" relational)*
 Node *relational(); // relational = add ("<" add | "<=" add | ">" add | ">=" add)*
-Node add();         // add      = mul ("+" mul | "-" mul)*
+Node *add();         // add      = mul ("+" mul | "-" mul)*
 Node *mul();        // mul      = unary ("*" unary | "/" unary)*
 Node *unary();      // unary    = ("+" | "-")? primary
 Node *primary();    // primary  = num | "(" expr ")"
 
 Node *expr() {
+    return relational();
+}
+
+Node *equality() {
+    Node *node = relational();
+
+    for (;;) {
+        if (consume("==")) {
+            node = new_node(ND_EQ, node, relational());
+        } else if (consume("!=")) {
+            node = new_node(ND_NE, node, relational());
+        } else {
+            return node;
+        }
+    }
+}
+
+Node *relational() {
+    Node *node = add();
+
+    for (;;) {
+        if (consume("<=")) {
+            node = new_node(ND_LE, node, add());
+        } else if (consume(">=")) {
+            node = new_node(ND_GE, node, add());
+        } else if (consume("<")) {
+            node = new_node(ND_LT, node, add());
+        } else if (consume(">")) {
+            node = new_node(ND_GT, node, add());
+        } else {
+            return node;
+        }
+    }
+}
+
+Node *add() {
     Node *node = mul();
 
     for (;;) {
