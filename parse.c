@@ -36,6 +36,19 @@ bool consume(char *op)
     return true;
 }
 
+// 次のトークンが期待している記号の時には、トークンを一つ読み進めて
+// トークンを返す。それ以外の時には NULL を返す。
+Token *consume_ident()
+{
+    Token *t = token; 
+    if (token->kind != TK_IDENT)
+    {
+        return NULL;
+    }
+    token = token->next;
+    return t;
+}
+
 // 次のトークンが期待している記号の時には、トークンを1つ読み進める。
 // それ以外の場合にはエラーを報告する
 void expect(char *op)
@@ -79,7 +92,7 @@ Token *new_token(TokenKind kind, Token *cur, char *str, int len)
 }
 
 // 入力文字列 p をトークナイズしてそれを返す
-Token *tokenize(char *p)
+void tokenize(char *p)
 {
     Token head;
     head.next = NULL;
@@ -109,9 +122,17 @@ Token *tokenize(char *p)
         if (*p == '+' || *p == '-' ||
             *p == '*' || *p == '/' ||
             *p == '(' || *p == ')' ||
-            *p == '<' || *p == '>')
+            *p == '<' || *p == '>' ||
+            *p == '=' || *p == ';')
         {
             cur = new_token(TK_RESERVED, cur, p++, 1);
+            continue;
+        }
+
+        // 1文字の文字をトークナイズ
+        if (*p >= 'a' && *p <= 'z')
+        {
+            cur = new_token(TK_IDENT, cur, p++, 1);
             continue;
         }
 
@@ -127,6 +148,6 @@ Token *tokenize(char *p)
     }
 
     new_token(TK_EOF, cur, p, 0);
-    return head.next;
+    token = head.next;
 }
 
